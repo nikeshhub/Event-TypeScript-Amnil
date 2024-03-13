@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Today's Events</title>
+    <style>
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Today's Events</h1>
+    <p>Dear Admin,</p>
+    <p>Here are the events for today:</p>
+    <table>
+      <tr>
+        <th>Title</th>
+        <th>Date</th>
+      </tr>
+      <% events.forEach(function(event) { %>
+      <tr>
+        <td><%= event.title %></td>
+        <td><%= event.date.toLocaleString("en-US", { timeZone: "UTC" }) %></td>
+      </tr>
+      <% }); %>
+    </table>
+    <p>Thank you.</p>
+    <p>Best regards,<br />Sapkota's Events</p>
+  </body>
+</html>
