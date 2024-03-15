@@ -3,3 +3,4 @@ node_modules
 public
 error.log
 success.log
+tests
