@@ -10,13 +10,22 @@ export const connectDatabase = async () => {
   try {
     await createConnection({
       type: "postgres",
-      host: "localhost",
-      port: 5432,
-      username: "postgres",
-      password: process.env.DB_PASSWORD,
-      database: "AmnilTS",
+      url: process.env.DB_URL,
+      ssl: {
+        rejectUnauthorized: false,
+      },
       synchronize: true,
       entities: [Event, User],
+
+      // type: "postgres",
+      // host: "localhost",
+      // port: 5432,
+      // username: "postgres",
+      // password: process.env.DB_PASSWORD,
+      // database: "AmnilTS",
+      // synchronize: true,
+      // entities: [Event, User],
+      // name: "default",
     });
     console.log("Connected to the database");
   } catch (error) {

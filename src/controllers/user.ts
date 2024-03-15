@@ -10,16 +10,14 @@ dotenv.config();
 
 const secretKey = process.env.SECRET_KEY || "Amnil";
 
-export const registerUser = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const registerUser = async (req: Request, res: Response) => {
   const data = req.body;
 
   try {
     const hashedPassword = await bcrypt.hash(data.password, 10);
     data.password = hashedPassword;
     data.verifyEmail = false;
+
     const result = await User.create(data).save();
 
     const infoObj = {
@@ -40,7 +38,7 @@ export const registerUser = async (
       data: result,
     });
   } catch (error: any) {
-    res.json({
+    res.status(500).json({
       success: false,
       message: error.message,
     });
@@ -95,7 +93,10 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
 
     if (user) {
       if (user.verifyEmail) {
-        const isPasswordValidated: boolean = await bcrypt.compare(password, user.password);
+        const isPasswordValidated: boolean = await bcrypt.compare(
+          password,
+          user.password
+        );
         if (isPasswordValidated) {
           const infoObj = {
             _id: user.id,
@@ -104,12 +105,8 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
           const expiryInfo = {
             expiresIn: "365d",
           };
-          const verificationToken = jwt.sign(
-            infoObj,
-            secretKey,
-            expiryInfo
-          );
-          res.json({
+          const verificationToken = jwt.sign(infoObj, secretKey, expiryInfo);
+          res.status(201).json({
             success: true,
             message: "Login successful",
             data: user,
@@ -124,7 +121,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
     } else {
       throw new Error("User not found");
     }
-  } catch (error:any) {
+  } catch (error: any) {
     console.error("Error logging in user:", error);
     res.status(500).json({
       success: false,

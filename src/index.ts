@@ -6,7 +6,7 @@ import { connectDatabase } from "./utils/db";
 import dotenv from "dotenv";
 import { runCronJob } from "./utils/cronJob";
 
-const app = express();
+export const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(express.json());
 dotenv.config();
