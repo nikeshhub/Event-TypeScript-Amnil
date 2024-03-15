@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2016",
+    "typeRoots": ["./node_modules/@types"],
 
     "module": "commonjs",
     "rootDir": "./src",
